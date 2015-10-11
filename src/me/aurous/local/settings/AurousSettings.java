@@ -19,6 +19,7 @@ public class AurousSettings {
 	public String[] scanPaths;
 	public String[] scanRestrictions;
 	public String[] scanExcludes;
+	public boolean invertedNav;
 	public String settingsPath = AppConstants.dataPath() + "settings.dat";
 
 
@@ -26,13 +27,14 @@ public class AurousSettings {
 
 	public void saveSettings(final String avatarPath, final String displayName,
 			final String defaultSearchEngine, final String[] scanPaths,
-			final String[] scanRestrictions, final String[] scanExcludes) {
+			final String[] scanRestrictions, final String[] scanExcludes, final boolean invertedNav) {
 		this.avatarPath = avatarPath;
 		this.displayName = displayName;
 		this.defaultSearchEngine = defaultSearchEngine;
 		this.scanPaths = scanPaths;
 		this.scanRestrictions = scanRestrictions;
 		this.scanExcludes = scanExcludes;
+		this.invertedNav = invertedNav;
 	}
 
 	public String[] getScanPaths() {
@@ -84,6 +86,7 @@ public class AurousSettings {
 		this.scanPaths = new String[0];
 		this.scanRestrictions = new String[0];
 		this.scanExcludes = new String[0];
+		this.invertedNav = false;
 		try {
 			helper.saveClass(new FileOutputStream(
 					this.settingsPath), this);

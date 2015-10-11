@@ -57,7 +57,7 @@ public class Aurous extends Application {
 		}
 
 		final Properties props = System.getProperties();
-		props.setProperty("jxbrowser.chromium.dnd.enabled", "false");
+        props.setProperty("jxbrowser.chromium.dnd.enabled", "false");
 		if (!AppConstants.VERBOSE_LOG) {
 			LoggerProvider.setLevel(Level.OFF);
 		}
@@ -108,7 +108,7 @@ public class Aurous extends Application {
 			primaryStage.initStyle(StageStyle.UNDECORATED);
 		}
 
-		final String index = new File(AppConstants.PRODUCTION_PATH).toURI()
+		final String index = new File(AppConstants.DEFAULT_PATH).toURI()
 				.toURL().toString();
 
 		final Browser browser = new Browser();

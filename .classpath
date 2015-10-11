@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="lib" path="D:/Downloads/gson-2.3.1.jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="lib" path="D:/Documents/core/libs/AppleJavaExtensions.jar"/>
+	<classpathentry kind="lib" path="D:/Documents/core/libs/commons-lang3-3.4.jar"/>
+	<classpathentry kind="lib" path="D:/Documents/core/libs/development.jar"/>
+	<classpathentry kind="lib" path="D:/Documents/core/libs/httpasyncclient-4.1.jar"/>
+	<classpathentry kind="lib" path="D:/Documents/core/libs/httpclient-4.4.1.jar"/>
+	<classpathentry kind="lib" path="D:/Documents/core/libs/httpcore-4.4.1.jar"/>
+	<classpathentry kind="lib" path="D:/Documents/core/libs/httpcore-nio-4.4.1.jar"/>
+	<classpathentry kind="lib" path="D:/Documents/core/libs/jaudiotagger-2.2.3.jar"/>
+	<classpathentry kind="lib" path="D:/Documents/core/libs/json_simple-1.1.jar"/>
+	<classpathentry kind="lib" path="D:/Documents/core/libs/jsoup-1.7.3.jar"/>
+	<classpathentry kind="lib" path="D:/Documents/core/libs/jxbrowser-5.2.jar"/>
+	<classpathentry kind="lib" path="D:/Documents/core/libs/jxbrowser-win-5.2.jar"/>
+	<classpathentry kind="lib" path="D:/Documents/core/libs/runtime.jar"/>
+	<classpathentry kind="lib" path="D:/Documents/core/libs/sqlite-jdbc-3.8.11.1.jar"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>

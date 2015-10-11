@@ -176,10 +176,11 @@ public class AurousBridge {
 					final String searchEngine = args[3].getString();
 					final String displayName = args[4].getString();
 					final String avatarPath = args[5].getString();
+					final boolean inverted = args[6].getBoolean();
 
 					settings.saveSettings(avatarPath, displayName,
 							searchEngine, scanPaths, scanRestrictions,
-							scanExcludes);
+							scanExcludes, inverted);
 
 					try {
 						helper.saveClass(new FileOutputStream(
