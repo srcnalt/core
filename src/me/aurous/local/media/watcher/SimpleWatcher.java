@@ -83,7 +83,7 @@ public class SimpleWatcher {
 
 	private boolean isValid(final File f) {
 		final String name = f.getName();
-		return !f.isDirectory() && extensions.contains(name.substring(name.length() - 3));
+		return !f.isDirectory() && name.length() > 3 && extensions.contains(name.substring(name.length() - 3));
 	}
 
 	private void process(final File f, final Kind <? > kind) throws IOException {
