@@ -184,14 +184,6 @@ public class Aurous extends Application {
 	}
 
 	public static void main(final String[] args) {
-            try {
-                BlockingChecker.rebase();
-            } catch (IOException ex) {
-                Logger.getLogger(Aurous.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (NoSuchAlgorithmException ex) {
-                Logger.getLogger(Aurous.class.getName()).log(Level.SEVERE, null, ex);
-            }
-                BlockingChecker.check();
 		launch(args);
 	}
 }
