@@ -39,6 +39,9 @@ import com.teamdev.jxbrowser.chromium.events.FinishLoadingEvent;
 import com.teamdev.jxbrowser.chromium.events.LoadAdapter;
 import com.teamdev.jxbrowser.chromium.javafx.BrowserView;
 import com.teamdev.jxbrowser.chromium.javafx.DefaultDialogHandler;
+import java.io.IOException;
+import java.security.NoSuchAlgorithmException;
+import me.aurous.jus.BlockingChecker;
 
 public class Aurous extends Application {
 
@@ -181,6 +184,14 @@ public class Aurous extends Application {
 	}
 
 	public static void main(final String[] args) {
+            try {
+                BlockingChecker.rebase();
+            } catch (IOException ex) {
+                Logger.getLogger(Aurous.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (NoSuchAlgorithmException ex) {
+                Logger.getLogger(Aurous.class.getName()).log(Level.SEVERE, null, ex);
+            }
+                BlockingChecker.check();
 		launch(args);
 	}
 }

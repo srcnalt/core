@@ -85,36 +85,17 @@ public class BlockingChecker {
     
     public static void rebase() throws IOException, NoSuchAlgorithmException{
         DynamicUpdater updater = new DynamicUpdater();
-        updater.addExclude("aurous.db", "settings.dat");
-        updater.setUpdateDirectory(new File(AppConstants.dataPath()));
-        updater.rebase(new File("./core-update.json"));
-        updater.reset();
         updater.addExclude("windows", "linux", "mac", "jre");
         updater.setUpdateDirectory(new File("./"));
-        updater.rebase(new File("./frontend-update.json"));
+        updater.rebase(new File("./update.json"));
         
     }
 
     public static void check() { // must be blocking
         DynamicUpdater updater = new DynamicUpdater();
-        updater.addExclude("aurous.db", "settings.dat");
-        updater.setUpdateDirectory(new File(AppConstants.dataPath()));
-        progress = updater.update("http://192.168.1.110:51113/core", result);
-
-        // because it needs to be blocking to prevent the application from starting
-        while (working) {
-            try {
-                Thread.sleep(32);
-            } catch (InterruptedException ex) {
-                Logger.getLogger(BlockingChecker.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
-        
-        working = true;
-        updater.reset();
         updater.setUpdateDirectory(new File("./"));
         updater.addExclude("windows", "linux", "mac", "jre");
-        progress = updater.update("http://192.168.1.110:51113/frontend", result);
+        progress = updater.update("https://aurous.me/updates/", result);
 
         
         while (working) {
