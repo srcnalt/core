@@ -12,3 +12,8 @@ hs_err_pid*
 /bin/
 /data/
 /windows/
+
+# project files
+build.xml
+/nbproject/
+/build/
