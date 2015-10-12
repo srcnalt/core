@@ -31,7 +31,8 @@ public class DynamicUpdater {
 	GSONHelper helper = new GSONHelper();
 	ArrayList<File> tracked = new ArrayList<File>();
 	ArrayList<String> nowrite = new ArrayList<String>();
-
+        ArrayList<String> exclude = new ArrayList<String>();
+        
 	String root = "";
 
 	Progress progress = new Progress();
@@ -50,6 +51,7 @@ public class DynamicUpdater {
 	}
 
 	private void addAll(final File f) {
+		if(exclude.contains(f.getName())) return;
 		for (final File file : f.listFiles()) {
 			if (file.isDirectory()) {
 				addAll(file);
@@ -58,6 +60,11 @@ public class DynamicUpdater {
 			}
 		}
 	}
+        
+        public void reset(){
+            tracked.clear();
+            exclude.clear();
+        }
 
 	// add file to list of non-writable files, update will be written to
 	// <name>.update
@@ -72,6 +79,10 @@ public class DynamicUpdater {
 			data.hashes.put(f.toString().substring(root.length()), getHash(f));
 		}
 		return data;
+	}
+
+	void addExclude(String ... excludes) {
+		for(String s : excludes) exclude.add(s);
 	}
 
 	class Progress {
@@ -143,7 +154,7 @@ public class DynamicUpdater {
 				}
 				index++;
 			} else {
-				result.finished(System.currentTimeMillis() - startTime);
+				result.finished(System.currentTimeMillis() - startTime, true);
 			}
 		}
 
@@ -180,6 +191,7 @@ public class DynamicUpdater {
 			total = needUpdate.size();
 			progress.count = total;
 			if (needUpdate.size() > 0) {
+				result.started();
 				final String file = needUpdate.get(0);
 				final File to = nowrite.contains(file) ? new File(root + file
 						+ ".update") : new File(root + file);
@@ -187,7 +199,7 @@ public class DynamicUpdater {
 						+ UPDATE_REMOTE_DIR + file.replace("\\", "/")), to,
 						updater);
 			} else {
-				result.finished(0);
+				result.finished(0, false);
 			}
 
 		} catch (final IOException ex) {

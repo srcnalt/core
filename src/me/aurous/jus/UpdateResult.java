@@ -11,7 +11,8 @@ package me.aurous.jus;
  * @author Aero
  */
 public interface UpdateResult {
-	public void finished(long time);
+	public void finished(long time, boolean updated);
 
 	public void failed(long time, Exception exception);
+        public void started();
 }
