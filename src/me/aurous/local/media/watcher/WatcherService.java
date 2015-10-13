@@ -155,6 +155,7 @@ public class WatcherService {
 											String script = "songCollection.appendDynamicRow(%s, '%s', %s, '%s', '%s', '%s', '%s');";
 											script = String.format(script, id, albumart, duration, album, title, artist, localUrl );
 											browser.executeJavaScript(script);
+											browser.executeJavaScript("songCollection.needsUpdate = true;");
 									//		System.out.println("song added");
 										}
 									}

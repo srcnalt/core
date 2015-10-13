@@ -104,6 +104,7 @@ public class DatabaseManager {
 		try {
 			final JSONObject results = new JSONObject();
 			final JSONArray resultsArray = new JSONArray();
+			int totalTime = 0;
 			final Statement stat = connection.createStatement();
 			final ResultSet rs = stat.executeQuery("SELECT songs.*, playlist.name as `playlist_title` FROM songs AS songs JOIN songs_in_playlist AS playlist_songs ON songs.id = playlist_songs.song_id JOIN playlist ON playlist_songs.playlist_id = playlist.id WHERE playlist.id = " + index);
 			while (rs.next()) {
@@ -120,6 +121,7 @@ public class DatabaseManager {
 						.getString("album"));
 				final String albumArt = rs.getString("albumArt");
 				final int duration = rs.getInt("duration");
+				totalTime += duration;
 				String localPath = null;
 				localPath = rs.getString("localPath");
 				final JSONObject resultsObject = new JSONObject();
@@ -133,6 +135,7 @@ public class DatabaseManager {
 				resultsArray.add(resultsObject);
 
 			}
+			results.put("totalTime", totalTime);
 			results.put("results", resultsArray);
 			final String bytesEncoded = Base64.encode(results.toJSONString()
 					.getBytes());
@@ -382,6 +385,19 @@ public class DatabaseManager {
 			prep.setInt(2, playlistId);
 			prep.addBatch();
 			prep.executeBatch();
+		} catch (final SQLException e) {
+			ExceptionWidget widget = new ExceptionWidget(e);
+			widget.showWidget();
+		}
+	}
+	
+	public static void updatePlaylistTitle(String playlistName, int playlistId) {
+		try {
+		final PreparedStatement prep = connection
+				.prepareStatement("UPDATE playlist SET name = ?  WHERE id = ?; ");
+		prep.setString(1, playlistName);
+		prep.setInt(2, playlistId);
+		prep.executeUpdate();
 		} catch (final SQLException e) {
 			ExceptionWidget widget = new ExceptionWidget(e);
 			widget.showWidget();

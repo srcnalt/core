@@ -35,6 +35,8 @@ import com.teamdev.jxbrowser.chromium.Browser;
 
 
 
+
+
 import me.aurous.exceptions.ExceptionWidget;
 import me.aurous.local.database.DatabaseManager;
 import me.aurous.local.settings.AurousSettings;
@@ -108,7 +110,7 @@ public class Utils {
 		}
 	}
 	
-	public static void downloadSong(final Browser browser, final String url, final String fileName) {
+	public static void downloadSong(final String url, final String fileName, boolean addToPlaylist, int playlistId) {
 		AurousSettings settings = new AurousSettings();
 		final String[] paths = settings.getScanPaths();
 		if (paths[0] != null) {
@@ -124,7 +126,21 @@ public class Utils {
 
 								@Override
 								public void finished(final long time) {
-							
+									if (addToPlaylist) {
+										try {
+											Thread.sleep(500);
+										} catch (InterruptedException e) {
+											// TODO Auto-generated catch block
+											e.printStackTrace();
+										}
+										final String localUrl = "file:///"
+												+ AurousStringUtils.htmlEncode(song.getPath()
+														.toString().replace("\\", "/"));
+										int id = DatabaseManager.getIdByLocalPath(localUrl);
+										if (id != -1) {
+											DatabaseManager.addSongToPlaylist(id, playlistId);
+										}
+									}
 									
 								}
 

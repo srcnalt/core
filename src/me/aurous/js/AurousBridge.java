@@ -184,10 +184,28 @@ public class AurousBridge {
 			final Thread one = new Thread() {
 				@Override
 				public void run() {
-					int songId = Integer.parseInt( args[0].getString());
-					System.out.println(songId);
+					int songId;
+					try {
+						songId = Integer.parseInt( args[0].getString());
+					} catch (NumberFormatException e) {
+				     	return;
+					}
 					int playlistId = (int) args[1].getNumber();
 						DatabaseManager.addSongToPlaylist(songId, playlistId);
+
+				}
+			};
+			one.start();
+			return JSValue.create(true);
+		});
+		browser.registerFunction("renamePlaylist", args -> {
+			final Thread one = new Thread() {
+				@Override
+				public void run() {
+					    String playlistName = args[0].getString();
+					    int playlistId = (int) args[1].getNumber();
+					
+						DatabaseManager.updatePlaylistTitle(playlistName, playlistId);
 
 				}
 			};
@@ -280,7 +298,14 @@ public class AurousBridge {
 					if (fileName.contains("?extra=")) {
 						fileName = fileName.split("\\?extra=")[0];
 					}
-			      Utils.downloadSong(browser, url, fileName);
+					if (args.length > 2) {
+						int playlistId = (int) args[2].getNumber();
+						  Utils.downloadSong(url, fileName, true, playlistId);
+					} else {
+						   Utils.downloadSong(url, fileName, false, -1);
+					}
+				
+				
 				//	System.out.println(fileName);
 				//	Utils.test(url, fileName);
 				}

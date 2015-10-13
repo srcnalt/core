@@ -126,7 +126,7 @@ public class Aurous extends Application {
 			primaryStage.initStyle(StageStyle.UNDECORATED);
 		}
 
-		final String index = new File(AppConstants.DEFAULT_PATH).toURI()
+		final String index = new File(AppConstants.PRODUCTION_PATH).toURI()
 				.toURL().toString();
 
 		final Browser browser = new Browser(BrowserContext.defaultContext());
