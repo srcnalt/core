@@ -58,6 +58,20 @@ public class DatabaseManager {
 		}
 	}
 
+	public static void createPlaylist(final String name) {
+		try {
+
+			final PreparedStatement prep = connection
+					.prepareStatement("insert into playlist  (name) values (?);");
+			prep.setString(1, name);
+			prep.addBatch();
+			prep.executeBatch();
+		} catch (final SQLException e) {
+			ExceptionWidget widget = new ExceptionWidget(e);
+			widget.showWidget();
+		}
+	}
+	
 	public static void updateAlbumArt(final String url, final int id) {
 		try {
 			final PreparedStatement prep = connection
@@ -84,6 +98,73 @@ public class DatabaseManager {
 			widget.showWidget();
 		}
 	}
+	
+	@SuppressWarnings("unchecked")
+	public static void loadSongsInPlaylist(Browser browser, int index) {
+		try {
+			final JSONObject results = new JSONObject();
+			final JSONArray resultsArray = new JSONArray();
+			final Statement stat = connection.createStatement();
+			final ResultSet rs = stat.executeQuery("SELECT songs.*, playlist.name as `playlist_title` FROM songs AS songs JOIN songs_in_playlist AS playlist_songs ON songs.id = playlist_songs.song_id JOIN playlist ON playlist_songs.playlist_id = playlist.id WHERE playlist.id = " + index);
+			while (rs.next()) {
+
+				final int id = rs.getInt("id");
+				String title = rs.getString("title");
+				if (rs.wasNull()) {
+					continue;
+				}
+				title = AurousStringUtils.UTFEncode(title);
+				final String artist = AurousStringUtils.UTFEncode(rs
+						.getString("artist"));
+				final String album = AurousStringUtils.UTFEncode(rs
+						.getString("album"));
+				final String albumArt = rs.getString("albumArt");
+				final int duration = rs.getInt("duration");
+				String localPath = null;
+				localPath = rs.getString("localPath");
+				final JSONObject resultsObject = new JSONObject();
+				resultsObject.put("id", id);
+				resultsObject.put("title", title);
+				resultsObject.put("artist", artist);
+				resultsObject.put("album", album);
+				resultsObject.put("albumArt", albumArt);
+				resultsObject.put("duration", duration);
+				resultsObject.put("link", localPath);
+				resultsArray.add(resultsObject);
+
+			}
+			results.put("results", resultsArray);
+			final String bytesEncoded = Base64.encode(results.toJSONString()
+					.getBytes());
+
+			String script = "playlist.populatePlaylist('%s');";
+			script = String.format(script, bytesEncoded);
+			script = script.replaceAll("[\r\n]+", " ");
+			// System.out.println(results.toJSONString());
+			browser.executeJavaScript(script);
+		} catch (final SQLException e) {
+			ExceptionWidget widget = new ExceptionWidget(e);
+			widget.showWidget();
+		}
+
+	}
+	public static void removePlaylist(int id) {
+		try {
+		 PreparedStatement prep = connection
+					.prepareStatement("DELETE FROM playlist WHERE id = ?;");
+			prep.setInt(1, id);
+			prep.executeUpdate();
+			
+			prep = connection
+					.prepareStatement("DELETE FROM songs_in_playlist WHERE playlist_id = ?;");
+			prep.setInt(1, id);
+			prep.executeUpdate();
+		} catch (final SQLException e) {
+			ExceptionWidget widget = new ExceptionWidget(e);
+			widget.showWidget();
+		}
+	}
+	
 	public static void updateRemotePath(String path, int id) {
 		try {
 			final PreparedStatement prep = connection
@@ -123,41 +204,43 @@ public class DatabaseManager {
 		return true;
 	}
 
-	public static String getAllScanPaths() {
+
+	@SuppressWarnings("unchecked")
+	public static String loadAllPlaylist(final Browser browser ) {
 		try {
 			final JSONObject results = new JSONObject();
 			final JSONArray resultsArray = new JSONArray();
 			final Statement stat = connection.createStatement();
-			final ResultSet rs = stat.executeQuery("SELECT * from scan_paths;");
-			final StringBuilder sb = new StringBuilder();
+			final ResultSet rs = stat.executeQuery("SELECT * from playlist;");
 			while (rs.next()) {
+
+			
+				String name = rs.getString("name");
 				if (rs.wasNull()) {
 					continue;
 				}
-				final String path = rs.getString("path");
+				int id = rs.getInt("id");
+				name = AurousStringUtils.UTFEncode(name);
+				final JSONObject resultsObject = new JSONObject();
+				resultsObject.put("id", id);
+				resultsObject.put("name", name);
+				resultsArray.add(resultsObject);
 
-				if (sb.length() > 0) {
-					sb.append(',');
-				}
-				sb.append(path);
 			}
+			results.put("results", resultsArray);
+			final String bytesEncoded = Base64.encode(results.toJSONString()
+					.getBytes());
 
-			final String bytesEncoded = Base64.encode(sb.toString().getBytes());
-
-			/*
-			 * String script = "songCollection.collectionCallback('%s');";
-			 * script = String.format(script, bytesEncoded); script =
-			 * script.replaceAll("[\r\n]+", " "); //
-			 * System.out.println(results.toJSONString());
-			 * browser.executeJavaScript(script);
-			 */
-			return bytesEncoded;
+			String script = "playlist.loadLocalPlaylist('%s');";
+			script = String.format(script, bytesEncoded);
+			script = script.replaceAll("[\r\n]+", " ");
+			// System.out.println(results.toJSONString());
+			browser.executeJavaScript(script);
 		} catch (final SQLException e) {
 			ExceptionWidget widget = new ExceptionWidget(e);
 			widget.showWidget();
 		}
-
-		return "";
+		return null;
 	}
 
 	@SuppressWarnings("unchecked")
@@ -290,6 +373,21 @@ public class DatabaseManager {
 		return "";
 	}
 
+	public static void addSongToPlaylist(int songId, int playlistId) {
+		try {
+
+			final PreparedStatement prep = connection
+					.prepareStatement("insert into songs_in_playlist (song_id, playlist_id) values (?, ?);");
+			prep.setInt(1, songId);
+			prep.setInt(2, playlistId);
+			prep.addBatch();
+			prep.executeBatch();
+		} catch (final SQLException e) {
+			ExceptionWidget widget = new ExceptionWidget(e);
+			widget.showWidget();
+		}
+	}
+	
 	public static void insertSong(final String title, final String artist,
 			final String album, final String albumArt, final int duration,
 			final String localPath, final String remotePath,

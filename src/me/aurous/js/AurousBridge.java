@@ -145,6 +145,67 @@ public class AurousBridge {
 			one.start();
 			return JSValue.create(true);
 		});
+		browser.registerFunction("createLocalPlaylist", args -> {
+			final Thread one = new Thread() {
+				@Override
+				public void run() {
+					String playlistName =  args[0].getString();
+					DatabaseManager.createPlaylist(playlistName);
+					System.out.println(playlistName + " created");
+				}
+			};
+			one.start();
+			return JSValue.create(true);
+		});
+		browser.registerFunction("loadAllPlaylist", args -> {
+			final Thread one = new Thread() {
+				@Override
+				public void run() {
+						DatabaseManager.loadAllPlaylist(browser);
+
+				}
+			};
+			one.start();
+			return JSValue.create(true);
+		});
+		browser.registerFunction("loadSongsInPlaylist", args -> {
+			final Thread one = new Thread() {
+				@Override
+				public void run() {
+					int id = (int) args[0].getNumber();
+						DatabaseManager.loadSongsInPlaylist(browser, id);
+
+				}
+			};
+			one.start();
+			return JSValue.create(true);
+		});
+		browser.registerFunction("addSongToPlaylist", args -> {
+			final Thread one = new Thread() {
+				@Override
+				public void run() {
+					int songId = Integer.parseInt( args[0].getString());
+					System.out.println(songId);
+					int playlistId = (int) args[1].getNumber();
+						DatabaseManager.addSongToPlaylist(songId, playlistId);
+
+				}
+			};
+			one.start();
+			return JSValue.create(true);
+		});
+		browser.registerFunction("deletePlaylist", args -> {
+			final Thread one = new Thread() {
+				@Override
+				public void run() {
+					int id = (int) args[0].getNumber();
+						DatabaseManager.removePlaylist(id);
+
+				}
+			};
+			one.start();
+			return JSValue.create(true);
+		});
 
 		browser.registerFunction("authVK", args -> {
 
