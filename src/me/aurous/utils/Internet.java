@@ -71,7 +71,7 @@ public class Internet {
 		BufferedReader reader = null;
 		try {
 			reader = new BufferedReader(new InputStreamReader(
-					conn.getInputStream()));
+					conn.getInputStream(), "UTF8"));
 		} catch (final IOException e) {
 
 		}

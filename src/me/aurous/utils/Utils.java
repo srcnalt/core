@@ -34,6 +34,7 @@ import com.teamdev.jxbrowser.chromium.Browser;
 
 
 
+
 import me.aurous.exceptions.ExceptionWidget;
 import me.aurous.local.database.DatabaseManager;
 import me.aurous.local.settings.AurousSettings;
@@ -44,7 +45,16 @@ public class Utils {
 	private static final String[] BROWSERS = new String[] {
 		"xdg-open", "google-chrome", "chromium", "firefox", "opera", "epiphany", "konqueror", "conkeror", "midori", "kazehakase", "mozilla"
 };
-	
+	public static String formatSeconds(final int total) {
+		final int minutes = (total / 60);
+		final int seconds = (total % 60);
+		String secs = Integer.toString(seconds);
+		if (seconds < 10) {
+			secs = "0" + seconds;
+		}
+		final String time = minutes + ":" + secs;
+		return time;
+	}
 
 	/**
 	 * Finds the first supported program in the list (for UNIX-like platforms

@@ -105,6 +105,7 @@ public class Aurous extends Application {
 				| IllegalArgumentException | IllegalAccessException e1) {
 				System.out.println("Unable to override system encoding");
 		}
+		System.out.println( System.getProperty("file.encoding"));
 		try {
 			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
 		} catch (ClassNotFoundException | InstantiationException

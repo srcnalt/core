@@ -34,7 +34,7 @@ public class VK extends SearchEngine {
 
 			final JSONObject results = new JSONObject();
 			final JSONArray resultsArray = new JSONArray();
-			final AudioApi api = new AudioApi(VKAuth.VK_APP_ID, Utils.readFile(AppConstants.dataPath() + "vkauth.dat", Charset.defaultCharset()));
+			final AudioApi api = new AudioApi(VKAuth.VK_APP_ID, Utils.readFile(AppConstants.dataPath() + "vkauth.dat", Charset.forName("UTF-8")));
 			final String parameters = String
 					.format("q=%s&auto_complete=1&sort=2&lyrics=0&count=%s&performer_only=%s",
 							AurousStringUtils.UTFEncode(phrase), this.RESULT_LIMIT, 0);
@@ -53,12 +53,11 @@ public class VK extends SearchEngine {
 					final JSONObject resultsObject = new JSONObject();
 					final Object jsonObject = response.get(i);
 					final JSONObject jsonResults = (JSONObject) JSONValue.parse(jsonObject.toString()); 
-					String artist = jsonResults.get("artist").toString();
-					String title = jsonResults.get("title").toString();
+					String artist =AurousStringUtils.UTFEncode( jsonResults.get("artist").toString());
+					String title = AurousStringUtils.UTFEncode(jsonResults.get("title").toString());
 					final String stream = jsonResults.get("url").toString();
-					final String duration = jsonResults.get("duration").toString();
-					title = AurousStringUtils.UTFEncode(title);
-					artist = AurousStringUtils.UTFEncode(artist);
+					final String duration =  Utils.formatSeconds(Integer
+							.parseInt(jsonResults.get("duration").toString()));
 					resultsObject.put("title", title);
 					resultsObject.put("artist", artist);
 					resultsObject.put("duration", duration);
@@ -75,7 +74,6 @@ public class VK extends SearchEngine {
 				script = script.replaceAll("[\r\n]+", " ");
 				// System.out.println(results.toJSONString());
 				browser.executeJavaScript(script);
-				System.out.println("Test VK");
 				return true;
 			} catch (IOException e) {
 			//	ExceptionWidget widget = new ExceptionWidget(e);

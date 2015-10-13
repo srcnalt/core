@@ -13,6 +13,7 @@ import me.aurous.helpers.Internet;
 import me.aurous.models.search.SearchEngine;
 import me.aurous.parallel.Parallel;
 import me.aurous.utils.AurousStringUtils;
+import me.aurous.utils.Utils;
 
 import org.apache.http.NameValuePair;
 import org.apache.http.client.utils.URIUtils;
@@ -59,16 +60,7 @@ public class Pleer extends SearchEngine {
 				URLEncodedUtils.format(qparams, "UTF-8"), null);
 	}
 
-	public String formatSeconds(final int total) {
-		final int minutes = (total / 60);
-		final int seconds = (total % 60);
-		String secs = Integer.toString(seconds);
-		if (seconds < 10) {
-			secs = "0" + seconds;
-		}
-		final String time = minutes + ":" + secs;
-		return time;
-	}
+	
 
 	@SuppressWarnings("unchecked")
 	@Override
@@ -111,7 +103,7 @@ public class Pleer extends SearchEngine {
 								.get(param).attr("singer"));
 						resultsObject.put("artist", artist);
 
-						final String duration = formatSeconds(Integer
+						final String duration = Utils.formatSeconds(Integer
 								.parseInt(li.get(param).attr("duration")));
 						resultsObject.put("duration", duration);
 
