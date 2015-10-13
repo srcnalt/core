@@ -46,10 +46,7 @@ public class Internet {
 			while ((line = r.readLine()) != null) {
 			    sb.append(line);
 			}
-			System.out.println(sb.toString());
-	
 		} catch (Exception ex) {
-			ex.printStackTrace();
 		}
 	}
 	public static Image image(final String url) {

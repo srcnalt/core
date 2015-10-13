@@ -12,7 +12,7 @@ public class AppConstants {
 	public static boolean REMOTE_DEBUG = true;
 	public static boolean VERBOSE_LOG = false;
 	public static boolean BORDERLESS = true;
-	public static String DEFAULT_PATH = "D:/Documents/frontend/app/index.html";
+	public static String DEFAULT_PATH = "D:/Documents/frontend/index.html";
 	public static String PRODUCTION_PATH = "./data/index.html";
 	public static boolean INTERNAL_DEBUG = false;
 

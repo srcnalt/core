@@ -2,6 +2,8 @@ package me.aurous;
 
 import java.io.File;
 import java.net.MalformedURLException;
+import java.nio.charset.Charset;
+import java.text.Format.Field;
 import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -30,6 +32,7 @@ import me.aurous.ui.window.AurousWindowManager;
 import me.aurous.utils.OSUtils;
 
 import com.teamdev.jxbrowser.chromium.Browser;
+import com.teamdev.jxbrowser.chromium.BrowserContext;
 import com.teamdev.jxbrowser.chromium.BrowserPreferences;
 import com.teamdev.jxbrowser.chromium.CloseStatus;
 import com.teamdev.jxbrowser.chromium.FileChooserMode;
@@ -39,8 +42,10 @@ import com.teamdev.jxbrowser.chromium.events.FinishLoadingEvent;
 import com.teamdev.jxbrowser.chromium.events.LoadAdapter;
 import com.teamdev.jxbrowser.chromium.javafx.BrowserView;
 import com.teamdev.jxbrowser.chromium.javafx.DefaultDialogHandler;
+
 import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
+
 import me.aurous.jus.BlockingChecker;
 
 public class Aurous extends Application {
@@ -92,6 +97,15 @@ public class Aurous extends Application {
 	@Override
 	public void start(final Stage primaryStage) throws MalformedURLException {
 		try {
+			System.setProperty("file.encoding","UTF-8");
+			java.lang.reflect.Field charset = Charset.class.getDeclaredField("defaultCharset");
+			charset.setAccessible(true);
+			charset.set(null,null);
+		} catch (NoSuchFieldException | SecurityException
+				| IllegalArgumentException | IllegalAccessException e1) {
+				System.out.println("Unable to override system encoding");
+		}
+		try {
 			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
 		} catch (ClassNotFoundException | InstantiationException
 				| IllegalAccessException | UnsupportedLookAndFeelException e) {
@@ -111,10 +125,10 @@ public class Aurous extends Application {
 			primaryStage.initStyle(StageStyle.UNDECORATED);
 		}
 
-		final String index = new File(AppConstants.DEFAULT_PATH).toURI()
+		final String index = new File(AppConstants.PRODUCTION_PATH).toURI()
 				.toURL().toString();
 
-		final Browser browser = new Browser();
+		final Browser browser = new Browser(BrowserContext.defaultContext());
 		final WatcherService service = new WatcherService(browser);
 		service.startService();
 		final BrowserPreferences preferences = browser.getPreferences();

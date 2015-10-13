@@ -53,11 +53,12 @@ public class VK extends SearchEngine {
 					final JSONObject resultsObject = new JSONObject();
 					final Object jsonObject = response.get(i);
 					final JSONObject jsonResults = (JSONObject) JSONValue.parse(jsonObject.toString()); 
-					final String artist = jsonResults.get("artist").toString();
-					final String title = jsonResults.get("title").toString();
+					String artist = jsonResults.get("artist").toString();
+					String title = jsonResults.get("title").toString();
 					final String stream = jsonResults.get("url").toString();
 					final String duration = jsonResults.get("duration").toString();
-					
+					title = AurousStringUtils.UTFEncode(title);
+					artist = AurousStringUtils.UTFEncode(artist);
 					resultsObject.put("title", title);
 					resultsObject.put("artist", artist);
 					resultsObject.put("duration", duration);

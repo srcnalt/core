@@ -103,7 +103,9 @@ public class Pleer extends SearchEngine {
 
 						final String title = AurousStringUtils.UTFEncode(li
 								.get(param).attr("song"));
+				
 						resultsObject.put("title", title);
+				
 
 						final String artist = AurousStringUtils.UTFEncode(li
 								.get(param).attr("singer"));
