@@ -24,11 +24,11 @@ import org.jsoup.select.Elements;
 import com.sun.org.apache.xml.internal.security.utils.Base64;
 import com.teamdev.jxbrowser.chromium.Browser;
 
-public class MP3WithMe extends SearchEngine {
+public class MP3WithMeEngine extends SearchEngine {
 	private final Browser browser;
 	private final String phrase;
 
-	public MP3WithMe(final Browser browser, final String phrase) {
+	public MP3WithMeEngine(final Browser browser, final String phrase) {
 		this.browser = browser;
 		this.phrase = phrase;
 

@@ -18,12 +18,12 @@ import org.json.simple.JSONValue;
 import com.sun.org.apache.xml.internal.security.utils.Base64;
 import com.teamdev.jxbrowser.chromium.Browser;
 
-public class VK extends SearchEngine {
+public class VKEngine extends SearchEngine {
 	private final Browser browser;
 	private final String phrase;
 	private final int RESULT_LIMIT = 50;
 	
-	public VK(final Browser browser, final String phrase) {
+	public VKEngine(final Browser browser, final String phrase) {
 		this.browser = browser;
 		this.phrase = phrase;
 	}

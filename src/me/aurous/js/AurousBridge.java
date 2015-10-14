@@ -374,17 +374,21 @@ public class AurousBridge {
 						
 							switch(engine) {
 							case "Aurous Network":
-								final Pleer pleer = new Pleer(browser, phrase);
-								// final MP3WithMe appSearch = new MP3WithMe(browser,
+								final PleerEngine pleerEngine = new PleerEngine(browser, phrase);
+								// final MP3WithMeEngine appSearch = new MP3WithMeEngine(browser,
 								// args[0].getString());
-								pleer.search();
+								pleerEngine.search();
 								break;
 							case "VK":
-								final VK vk = new VK(browser, phrase);
-								vk.search();
+								final VKEngine vKEngine = new VKEngine(browser, phrase);
+								vKEngine.search();
+								break;
+							case "Soundcloud":
+								final SoundCloudEngine soundCloud = new SoundCloudEngine(browser, phrase);
+								soundCloud.search();
 								break;
 							case "MP3WithMe":
-								final MP3WithMe mp3withme = new MP3WithMe(browser, phrase);
+								final MP3WithMeEngine mp3withme = new MP3WithMeEngine(browser, phrase);
 								mp3withme.search();
 								break;
 							}
@@ -393,8 +397,8 @@ public class AurousBridge {
 							
 						}  else {
 							String phrase = args[0].getString();
-							final Pleer pleer = new Pleer(browser, phrase);
-							pleer.search();
+							final PleerEngine pleerEngine = new PleerEngine(browser, phrase);
+							pleerEngine.search();
 							phrase = AurousStringUtils.UTFEncode(phrase);
 							Internet.openUrl("https://aurous.me/api/terms/?phrase=" + phrase);
 					

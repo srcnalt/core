@@ -74,7 +74,7 @@ public final class ServiceConstants {
 	}
 
 	/**
-	 * Pleer specific settings
+	 * PleerEngine specific settings
 	 */
 	public static final class Pleer {
 		public static final String API_HOST = "pleer.com";

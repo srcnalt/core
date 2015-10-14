@@ -1,6 +1,10 @@
 package me.aurous;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.net.MalformedURLException;
 import java.nio.charset.Charset;
 import java.text.Format.Field;
@@ -49,8 +53,27 @@ import java.security.NoSuchAlgorithmException;
 import me.aurous.jus.BlockingChecker;
 
 public class Aurous extends Application {
-
+	public void extractUpdater() throws FileNotFoundException , IOException{
+        InputStream in = Aurous.class.getResourceAsStream("/Aurous.jar");
+        File f = new File("./Aurous.jar");
+        f.delete();
+        OutputStream out = new FileOutputStream(f);
+        int r = 0;
+	byte[] b = new byte[0x7FFF]; // 32kb
+        while((r=in.read(b))>-1) out.write(b,0,r);
+        
+        in.close();
+        out.close();
+    }
+    
+	
 	private void config() {
+	//	try {
+	//	extractUpdater();
+	//	} catch (IOException e) {
+	//		// TODO Auto-generated catch block
+	//		e.printStackTrace();
+	//	}
 		System.setProperty("awt.useSystemAAFontSettings", "on");
 		System.setProperty("swing.aatext", "true"); // enable System aa
 		final AurousSettings settings = new AurousSettings();
@@ -126,7 +149,7 @@ public class Aurous extends Application {
 			primaryStage.initStyle(StageStyle.UNDECORATED);
 		}
 
-		final String index = new File(AppConstants.PRODUCTION_PATH).toURI()
+		final String index = new File(AppConstants.DEFAULT_PATH).toURI()
 				.toURL().toString();
 
 		final Browser browser = new Browser(BrowserContext.defaultContext());

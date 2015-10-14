@@ -30,12 +30,12 @@ import org.jsoup.select.Elements;
 import com.sun.org.apache.xml.internal.security.utils.Base64;
 import com.teamdev.jxbrowser.chromium.Browser;
 
-public class Pleer extends SearchEngine {
+public class PleerEngine extends SearchEngine {
 	private final Browser browser;
 	private final String phrase;
 	private final String PEER_API = "http://pleer.com/site_api/files/get_url?action=download&id=%s";
 
-	public Pleer(final Browser browser, final String phrase) {
+	public PleerEngine(final Browser browser, final String phrase) {
 		this.browser = browser;
 		this.phrase = phrase;
 	}
@@ -142,7 +142,7 @@ public class Pleer extends SearchEngine {
 			String script = "searchCallback('%s');";
 			script = String.format(script, bytesEncoded);
 			script = script.replaceAll("[\r\n]+", " ");
-			// System.out.println(results.toJSONString());
+			 System.out.println(results.toJSONString());
 			browser.executeJavaScript(script);
 		//	System.out.println("Test");
 

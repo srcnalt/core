@@ -29,7 +29,7 @@ public class VKAuth {
 	public static final String REDIRECT_URL = "https://oauth.vk.com/blank.html";
 	public static final String VK_AUTH_URL = "https://oauth.vk.com/authorize?client_id="
 			+ VK_APP_ID + "&scope=" + VK_APP_MASK + "&response_type=token";
-	public static final String APPLICATION_TITLE = "Aurous VK Auth";
+	public static final String APPLICATION_TITLE = "Aurous VKEngine Auth";
 	public static final String LOGIN_SUCCESS_PAGE = "blank.html#",
 			LOGIN_FAILURE_PAGE = "blank.html#error";
 	private volatile boolean loginSuccess = false, loginFailure = false;
