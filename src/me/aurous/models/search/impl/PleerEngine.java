@@ -142,7 +142,6 @@ public class PleerEngine extends SearchEngine {
 			String script = "searchCallback('%s');";
 			script = String.format(script, bytesEncoded);
 			script = script.replaceAll("[\r\n]+", " ");
-			 System.out.println(results.toJSONString());
 			browser.executeJavaScript(script);
 		//	System.out.println("Test");
 

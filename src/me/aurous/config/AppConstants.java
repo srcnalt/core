@@ -6,6 +6,7 @@ import me.aurous.utils.OSUtils;
 import me.aurous.utils.PathUtils;
 
 public class AppConstants {
+	public static String HTML5_PLAYER_CODE = null;
 	public static double VERSION = 0.1;
 	public static String APP_NAME = "Aurous";
 	public static String INTERNAL = "Project Phoneix";

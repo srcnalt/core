@@ -1,11 +1,13 @@
 package me.aurous;
 
+import java.awt.Rectangle;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.MalformedURLException;
+import java.net.URL;
 import java.nio.charset.Charset;
 import java.text.Format.Field;
 import java.util.Properties;
@@ -34,6 +36,7 @@ import me.aurous.local.media.watcher.WatcherService;
 import me.aurous.local.settings.AurousSettings;
 import me.aurous.ui.window.AurousWindowManager;
 import me.aurous.utils.OSUtils;
+import me.aurous.utils.Utils;
 
 import com.teamdev.jxbrowser.chromium.Browser;
 import com.teamdev.jxbrowser.chromium.BrowserContext;
@@ -42,6 +45,9 @@ import com.teamdev.jxbrowser.chromium.CloseStatus;
 import com.teamdev.jxbrowser.chromium.FileChooserMode;
 import com.teamdev.jxbrowser.chromium.FileChooserParams;
 import com.teamdev.jxbrowser.chromium.LoggerProvider;
+import com.teamdev.jxbrowser.chromium.PopupContainer;
+import com.teamdev.jxbrowser.chromium.PopupHandler;
+import com.teamdev.jxbrowser.chromium.PopupParams;
 import com.teamdev.jxbrowser.chromium.events.FinishLoadingEvent;
 import com.teamdev.jxbrowser.chromium.events.LoadAdapter;
 import com.teamdev.jxbrowser.chromium.javafx.BrowserView;
@@ -53,18 +59,7 @@ import java.security.NoSuchAlgorithmException;
 import me.aurous.jus.BlockingChecker;
 
 public class Aurous extends Application {
-	public void extractUpdater() throws FileNotFoundException , IOException{
-        InputStream in = Aurous.class.getResourceAsStream("/Aurous.jar");
-        File f = new File("./Aurous.jar");
-        f.delete();
-        OutputStream out = new FileOutputStream(f);
-        int r = 0;
-	byte[] b = new byte[0x7FFF]; // 32kb
-        while((r=in.read(b))>-1) out.write(b,0,r);
-        
-        in.close();
-        out.close();
-    }
+
     
 	
 	private void config() {
@@ -208,6 +203,7 @@ public class Aurous extends Application {
 
 			}
 		});
+	
 
 		// browser.loadURL("http://104.131.187.115/nwtests/index.html");
 		// browser.loadURL("http://vk.me");

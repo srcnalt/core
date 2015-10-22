@@ -37,6 +37,7 @@ import com.teamdev.jxbrowser.chromium.Browser;
 
 
 
+
 import me.aurous.exceptions.ExceptionWidget;
 import me.aurous.local.database.DatabaseManager;
 import me.aurous.local.settings.AurousSettings;
@@ -171,5 +172,9 @@ public class Utils {
 			widget.showWidget();
 		}
 		return path;
+	}
+
+	public static boolean isNull(final Object obj) {
+		return obj == null;
 	}
 }

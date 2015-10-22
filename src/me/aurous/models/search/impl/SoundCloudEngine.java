@@ -59,7 +59,6 @@ public class SoundCloudEngine extends SearchEngine {
 		soundcloud.put("limit", limit);
 		final ArrayList<Track> result = soundcloud.findTrack(phrase);
 
-		System.out.println("Tracks: " + result.size());
 		{
 			Parallel.awaitFor(result,
 					param -> {
@@ -74,7 +73,6 @@ public class SoundCloudEngine extends SearchEngine {
 							resultsObject.put("artist", artist);
 							
 							final String duration = Utils.formatSeconds((int) ( param.getDuration() / 1000.0));
-							System.out.println( duration);
 							resultsObject.put("duration", duration);
 			
 							
@@ -92,7 +90,6 @@ public class SoundCloudEngine extends SearchEngine {
 			String script = "searchCallback('%s');";
 			script = String.format(script, bytesEncoded);
 			script = script.replaceAll("[\r\n]+", " ");
-			 System.out.println(results.toJSONString());
 			browser.executeJavaScript(script);
 			return true;
 

@@ -298,6 +298,9 @@ public class AurousBridge {
 					if (fileName.contains("?extra=")) {
 						fileName = fileName.split("\\?extra=")[0];
 					}
+					if (fileName.contains("?")) {
+						fileName = fileName.split("\\?")[0];
+					}
 					if (args.length > 2) {
 						int playlistId = (int) args[2].getNumber();
 						  Utils.downloadSong(url, fileName, true, playlistId);
@@ -375,8 +378,6 @@ public class AurousBridge {
 							switch(engine) {
 							case "Aurous Network":
 								final PleerEngine pleerEngine = new PleerEngine(browser, phrase);
-								// final MP3WithMeEngine appSearch = new MP3WithMeEngine(browser,
-								// args[0].getString());
 								pleerEngine.search();
 								break;
 							case "VK":
@@ -387,20 +388,14 @@ public class AurousBridge {
 								final SoundCloudEngine soundCloud = new SoundCloudEngine(browser, phrase);
 								soundCloud.search();
 								break;
-							case "MP3WithMe":
-								final MP3WithMeEngine mp3withme = new MP3WithMeEngine(browser, phrase);
-								mp3withme.search();
-								break;
 							}
 							phrase = AurousStringUtils.UTFEncode(phrase);
-							Internet.openUrl("https://aurous.me/api/terms/?phrase=" + phrase);
-							
 						}  else {
 							String phrase = args[0].getString();
 							final PleerEngine pleerEngine = new PleerEngine(browser, phrase);
 							pleerEngine.search();
 							phrase = AurousStringUtils.UTFEncode(phrase);
-							Internet.openUrl("https://aurous.me/api/terms/?phrase=" + phrase);
+					//		Internet.openUrl("https://aurous.me/api/terms/?phrase=" + phrase);
 					
 						}
 					}
